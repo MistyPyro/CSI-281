@@ -43,22 +43,38 @@ namespace csi281 {
   // Look up a CityYear instance held by CityTemperatureData by its year.
   // Find the right CityYear in the array and return it
   const CityYear CityTemperatureData::operator[](const int year) const {
-    // YOUR CODE HERE
+    for (int i = 0; i < _count; i++) {
+      if (_data[i].year == year) {
+        return _data[i];
+      }
+    }
   }
 
   // Get the average (mean) temperature of all time for this city
   // by averaging every CityYear.
   float CityTemperatureData::getAllTimeAverage() const {
-    // YOUR CODE HERE
+    float totalAvg = 0;
+    for (int i = 0; i < _count; i++) {
+      totalAvg += _data[i].averageTemperature;
+    }
+    return totalAvg / _count;
   }
 
   // Sum all of the days below 32 for all years.
   int CityTemperatureData::getTotalDaysBelow32() const {
-    // YOUR CODE HERE
+    int totalDays = 0;
+    for (int i = 0; i < _count; i++) {
+      totalDays += _data[i].numDaysBelow32;
+    }
+    return totalDays;
   }
 
   // Sum all of the days above 90 for all years.
   int CityTemperatureData::getTotalDaysAbove90() const {
-    // YOUR CODE HERE
+    int totalDays = 0;
+    for (int i = 0; i < _count; i++) {
+      totalDays += _data[i].numDaysAbove90;
+    }
+    return totalDays;
   }
 }  // namespace csi281

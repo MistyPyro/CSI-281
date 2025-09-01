@@ -75,17 +75,18 @@ namespace csi281 {
   // You'll also want to construct a CityYear from what you have read from the file
   CityYear readLine(ifstream &file) {
     // YOUR CODE HERE
-    string holder;
+    string temp;
     int date, dx32, dx90, tavg, tmax, tmin;
-    getline(file, holder, ',');
-    getline(file, holder, ',');
-    date = readIntCell(file);
-    dx32 = readIntCell(file);
-    dx90 = readIntCell(file);
-    tavg = readIntCell(file);
-    tmax = readIntCell(file);
-    tmin = readIntCell(file);
-
+    getline(file, temp);
+    istringstream holder(temp);
+    date = readIntCell(holder);
+    dx32 = readIntCell(holder);
+    dx90 = readIntCell(holder);
+    tavg = readIntCell(holder);
+    tmax = readIntCell(holder);
+    tmin = readIntCell(holder);
+    CityYear cityData(date, dx32, dx90, tavg, tmax, tmin);
+    return cityData;
   }
 
   // Read city by looking at the specified lines in the CSV
@@ -98,5 +99,14 @@ namespace csi281 {
   // create an array of CityYear instances to pass to the CityTemperatureData constructor
   // when the CityTemperatureData is created, it will take ownership of the array
   CityTemperatureData* readCity(string cityName, string fileName, int startLine, int endLine) {
+    ifstream file(fileName);
+    int numYears = 0;
+    CityYear* cityData = new CityYear[numYears];
+    for (int i = startLine; i <= endLine; i++) {
+      cityData[i] = readLine(file);
+      numYears++;
+    }
+    file.close();
+    CityTemperatureData(cityName, cityData, numYears);
   }
 }  // namespace csi281
