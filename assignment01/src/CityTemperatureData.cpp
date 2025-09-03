@@ -48,6 +48,7 @@ namespace csi281 {
         return _data[i];
       }
     }
+    return CityYear();
   }
 
   // Get the average (mean) temperature of all time for this city
@@ -57,7 +58,7 @@ namespace csi281 {
     for (int i = 0; i < _count; i++) {
       totalAvg += _data[i].averageTemperature;
     }
-    return totalAvg / _count;
+    return totalAvg / static_cast<float>(_count);
   }
 
   // Sum all of the days below 32 for all years.
