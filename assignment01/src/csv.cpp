@@ -75,8 +75,11 @@ namespace csi281 {
   // You'll also want to construct a CityYear from what you have read from the file
   CityYear readLine(ifstream &file) {
     // YOUR CODE HERE
-    string temp;
+    string temp, junk;
     int date, dx32, dx90, tavg, tmax, tmin;
+    getline(file, junk);
+    getline(file, junk, ',');
+    getline(file, junk, ',');
     getline(file, temp);
     istringstream holder(temp);
     date = readIntCell(holder);
