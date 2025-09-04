@@ -76,18 +76,18 @@ namespace csi281 {
   CityYear readLine(ifstream &file) {
     // YOUR CODE HERE
     string temp, junk;
-    int date, dx32, dx90, tavg, tmax, tmin;
-    getline(file, junk);
-    getline(file, junk, ',');
-    getline(file, junk, ',');
+    int date, dx32, dx90;
+    float tavg, tmax, tmin;
     getline(file, temp);
     istringstream holder(temp);
+    junk = readStringCell(holder);
+    junk = readStringCell(holder);
     date = readIntCell(holder);
     dx32 = readIntCell(holder);
     dx90 = readIntCell(holder);
-    tavg = readIntCell(holder);
-    tmax = readIntCell(holder);
-    tmin = readIntCell(holder);
+    tavg = readFloatCell(holder);
+    tmax = readFloatCell(holder);
+    tmin = readFloatCell(holder);
     CityYear cityData(date, dx32, dx90, tavg, tmax, tmin);
     return cityData;
   }
@@ -103,10 +103,13 @@ namespace csi281 {
   // when the CityTemperatureData is created, it will take ownership of the array
   CityTemperatureData* readCity(string cityName, string fileName, int startLine, int endLine) {
     ifstream file(fileName);
+    string titles;
+    getline(file, titles);
     int numYears = 0;
     CityYear* cityData = new CityYear[numYears];
-    for (int i = startLine; i <= endLine; i++) {
-      cityData[i] = readLine(file);
+    for (int i = 0; i <= endLine-startLine; i++) {
+      auto x = readLine(file);
+      cityData[i] = x;
       numYears++;
     }
     file.close();

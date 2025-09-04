@@ -41,7 +41,12 @@ namespace csi281 {
   // with numbers between *min* and *max*
   // Suggest using the facilities in STL <random>
   int *randomIntArray(const int length, const int min, const int max) {
-    // YOUR CODE HERE
+    random_device rd;
+
+    mt19937 generator(rd()); // Mersenne Twister RNG
+    uniform_int_distribution<int> distribution(min, max);
+    // int r = distribution(generator); use the distribution to transform random number
+    // int r2 = distribution(rd); // use the rd to get a random element in the distribution range
   }
 
   // Finds the speed of linear versus binary search
