@@ -37,7 +37,7 @@ namespace csi281 {
 
   // Release any memory connected to CityTemperatureData.
   CityTemperatureData::~CityTemperatureData() {
-    delete _data;
+    delete[] _data;
   }
 
   // Look up a CityYear instance held by CityTemperatureData by its year.

@@ -104,15 +104,16 @@ namespace csi281 {
   CityTemperatureData* readCity(string cityName, string fileName, int startLine, int endLine) {
     ifstream file(fileName);
     string titles;
-    getline(file, titles);
-    int numYears = 0;
+    for (int i = 0; i < startLine; i++) {
+      getline(file, titles);
+    }
+    int numYears = (endLine - startLine) + 1;
     CityYear* cityData = new CityYear[numYears];
-    for (int i = 0; i <= endLine-startLine; i++) {
+    for (int i = 0; i < numYears; i++) {
       auto x = readLine(file);
       cityData[i] = x;
-      numYears++;
     }
     file.close();
-    CityTemperatureData(cityName, cityData, numYears);
+    return new CityTemperatureData(cityName, cityData, numYears);
   }
 }  // namespace csi281
