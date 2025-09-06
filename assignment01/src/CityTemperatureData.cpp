@@ -43,7 +43,7 @@ namespace csi281 {
   // Look up a CityYear instance held by CityTemperatureData by its year.
   // Find the right CityYear in the array and return it
   const CityYear CityTemperatureData::operator[](const int year) const {
-    for (int i = 0; i < _count; i++) {
+    for (int i = 0; i < _count; i++) { // loop through array for match, simple search taking O(n) time
       if (_data[i].year == year) {
         return _data[i];
       }

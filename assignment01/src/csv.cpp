@@ -80,8 +80,10 @@ namespace csi281 {
     float tavg, tmax, tmin;
     getline(file, temp);
     istringstream holder(temp);
+    // get Station ID and Name out of way so we can use the other data
     junk = readStringCell(holder);
     junk = readStringCell(holder);
+    //get needed data
     date = readIntCell(holder);
     dx32 = readIntCell(holder);
     dx90 = readIntCell(holder);
@@ -104,11 +106,13 @@ namespace csi281 {
   CityTemperatureData* readCity(string cityName, string fileName, int startLine, int endLine) {
     ifstream file(fileName);
     string titles;
+    //loop to start of cities data (for New York, skip the headings, for Burlington, skip New York)
     for (int i = 0; i < startLine; i++) {
       getline(file, titles);
     }
     int numYears = (endLine - startLine) + 1;
     CityYear* cityData = new CityYear[numYears];
+    //read each line from spreadsheet and populate array
     for (int i = 0; i < numYears; i++) {
       auto x = readLine(file);
       cityData[i] = x;
