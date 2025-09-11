@@ -30,6 +30,7 @@
 #define search_hpp
 
 #include "MemoryLeakDetector.h"
+#include <cmath>
 
 namespace csi281 {
 
