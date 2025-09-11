@@ -24,6 +24,8 @@
 //  OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 //  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 //  OTHER DEALINGS IN THE SOFTWARE.
+//
+// MODIFIED BY COLIN SKAARUP
 
 #include "util.h"
 
@@ -43,10 +45,18 @@ namespace csi281 {
   int *randomIntArray(const int length, const int min, const int max) {
     random_device rd;
 
+    int* array = new int[length];
     mt19937 generator(rd()); // Mersenne Twister RNG
     uniform_int_distribution<int> distribution(min, max);
     //int r = distribution(generator); use the distribution to transform random number
-    //int r2 = distribution(rd); // use the rd to get a random element in the distribution range
+    int r2 = distribution(rd); // use the rd to get a random element in the distribution range
+    for (int i = 0; i < length; i++) {
+      array[i] = r2;
+      r2 = distribution(rd);
+    }
+    sort(array, array + length);
+
+    return array;
   }
 
   // Finds the speed of linear versus binary search
@@ -76,22 +86,22 @@ namespace csi281 {
     auto start = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
     auto end = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
 
+    start = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
     for (int i = 0; i < numTests; i++) {
-      start = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
       linearSearch(testArray, length, testKeys[i]);
-      end = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
     }
-    auto linearSearchSpeed = end - start;
+    end = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
+    auto linearSearchSpeed = (end - start) / numTests;
 
     // Do numTests binary searches and find the average time
     // Put the result in a variable binarySearchSpeed
 
+    start = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
     for (int i = 0; i < numTests; i++) {
-      start = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
       binarySearch(testArray, length, testKeys[i]);
-      end = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
     }
-    auto binarySearchSpeed = end - start;
+    end = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
+    auto binarySearchSpeed = (end - start) / numTests;
 
     delete testArray;
     delete testKeys;

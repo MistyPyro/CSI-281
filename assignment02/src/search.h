@@ -25,6 +25,8 @@
 //  OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 //  ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 //  OTHER DEALINGS IN THE SOFTWARE.
+//
+// MODIFIED BY COLIN SKAARUP
 
 #ifndef search_hpp
 #define search_hpp
@@ -55,15 +57,15 @@ namespace csi281 {
     while (array[i] != key) {
       if (array[i] < key) {
         smallGuess = i;
-        i += floor(0.5 * (bigGuess - i));
+        i += floor(0.5 * (bigGuess - smallGuess));
         counter++;
       }
       if (array[i] > key) {
         bigGuess = i;
-        i += floor(0.5 * (bigGuess - smallGuess));
+        i -= floor(0.5 * (bigGuess - smallGuess));
         counter++;
       }
-      if (counter >= 0.5 * length) { //generous if, binary search will find key in less than 1/2 length steps
+      if (counter >= ceil(log2(length))) { // binary search is O(log(N)), so if it takes longer than that, key is not in array
         return -1;
       }
     }

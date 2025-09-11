@@ -1,0 +1,5 @@
+Colin Skaarup
+
+1. O(nlog(n)). The populating of the array is O(n), but the sorting is O(nlog(n)), so the entire function is O(nlog(n)).
+
+2.
