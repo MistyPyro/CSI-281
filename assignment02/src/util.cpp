@@ -73,12 +73,25 @@ namespace csi281 {
     // Do numTests linear searches and find the average time
     // Put the result in a variable linearSearchSpeed
 
-    // YOUR CODE HERE
+    auto start = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
+    auto end = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
+
+    for (int i = 0; i < numTests; i++) {
+      start = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
+      linearSearch(testArray, length, testKeys[i]);
+      end = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
+    }
+    auto linearSearchSpeed = end - start;
 
     // Do numTests binary searches and find the average time
     // Put the result in a variable binarySearchSpeed
 
-    // YOUR CODE HERE
+    for (int i = 0; i < numTests; i++) {
+      start = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
+      binarySearch(testArray, length, testKeys[i]);
+      end = duration_cast< nanoseconds >(system_clock::now().time_since_epoch()).count();
+    }
+    auto binarySearchSpeed = end - start;
 
     delete testArray;
     delete testKeys;

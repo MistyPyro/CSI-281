@@ -40,22 +40,33 @@ namespace csi281 {
       if (array[i] == key) {
         return i;
       }
-      return -1;
     }
+    return -1;
   }
 
   // Returns the first location of the found key
   // or -1 if the key is never found; assumes a sorted array
   template <typename T> int binarySearch(T array[], const int length, const T key) {
     int i = length / 2;
-    do {
-      if (array[i] == key)
-        return i;
-      if (array[i] < key)
-        i *= ((length - i) / 2) + i;
-      if (array[i] > key)
-        i /= 2;
-    } while (array[i] != key);
+    int bigGuess = length;
+    int smallGuess = 0;
+    int counter = 0; // to prevent infinite looping
+    while (array[i] != key) {
+      if (array[i] < key) {
+        smallGuess = i;
+        i += floor(0.5 * (bigGuess - i));
+        counter++;
+      }
+      if (array[i] > key) {
+        bigGuess = i;
+        i += floor(0.5 * (bigGuess - smallGuess));
+        counter++;
+      }
+      if (counter >= 0.5 * length) { //generous if, binary search will find key in less than 1/2 length steps
+        return -1;
+      }
+    }
+    return i;
   }
 }  // namespace csi281
 
