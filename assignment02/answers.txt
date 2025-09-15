@@ -3,8 +3,8 @@ Colin Skaarup
 1. O(nlog(n)). The populating of the array is O(n),
    but the sorting is O(nlog(n)), so the entire function is O(nlog(n)).
 
-2. O(n^2). The timing of linear Search iterates n times over n arrays, aka n^2.
-   Binary search is O(nlog(n)), so it is overshadowed by the linearSearch.
+2. O(nlog(n)). The timing of linear Search iterates n times over an array, aka O(n).
+   Binary search is O(nlog(n)), so it overshadows the linearSearch's O(n).
 
 3. x = # of searches
    12(n)log(n) + 10xlog(n) = 5xn
