@@ -29,7 +29,7 @@
 #define dynamicarray_hpp
 
 #include <algorithm>  // for copy(), min(), move_backward
-                      // for assert()
+#include <assert.h>   // for assert()
 
 #include "Collection.h"
 #include "MemoryLeakDetector.h"
@@ -53,12 +53,17 @@ namespace csi281 {
     // Find the index of a particular item
     // Return -1 if it is not found>
     int find(const T &item) {
-      // YOUR CODE HERE
+      for (int i = 0; i < capacity; i++) {
+        if (backingStore[i] == item) {
+          return i;
+        }
+      }
+      return -1;
     }
 
     // Get the item at a particular index
     T &get(int index) {
-      // YOUR CODE HERE
+      return backingStore[index];
     }
 
     // Insert at the beginning of the collection
@@ -66,14 +71,25 @@ namespace csi281 {
     // inserting
     // Hint: May want to use moveDownFrom()
     void insertAtBeginning(const T &item) {
-      // YOUR CODE HERE
+      if (capacity == count)
+        setCapacity(count * growthFactor);
+      /*for (size_t i = count; i > 0; i--)
+        backingStore[i] = backingStore[i - 1];
+      backingStore[0] = item;
+      count++;*/
+      moveDownFrom(0);
+      backingStore[0] = item;
+      count++;
     }
 
     // Insert at the end of the collection
     // Using setCapacity() if we are too small before
     // inserting
     void insertAtEnd(const T &item) {
-      // YOUR CODE HERE
+      if (capacity == count)
+        setCapacity(count * growthFactor);
+      count++;
+      backingStore[count] = item;
     }
 
     // Insert at a specific index
@@ -81,18 +97,25 @@ namespace csi281 {
     // inserting
     // Hint: May want to use moveDownFrom()
     void insert(const T &item, int index) {
-      // YOUR CODE HERE
+      if (capacity == count)
+        setCapacity(count * growthFactor);
+      moveDownFrom(index);
+      backingStore[index] = item;
+      count++;
     }
 
     // Remove the item at the beginning of the collection
     void removeAtBeginning() {
-      // YOUR CODE HERE
+      for (size_t i = 0; i < count; i++)
+        backingStore[i - 1] = backingStore[i];
+      count--;
     }
 
     // Remove the item at the end of the collection
     // Hint: This might be very simple.
     void removeAtEnd() {
-      // YOUR CODE HERE
+      backingStore[count] = 0;
+      count--;
     }
 
     // Remove the item at a specific index
