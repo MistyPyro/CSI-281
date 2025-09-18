@@ -8,7 +8,8 @@ project(csi281)
 include(cmake/get_cpm.cmake)
 
 # check compiler and set the highest c++ standard available
-include(cmake/compiler_check.cmake)
+#include(cmake/compiler_check.cmake)
+set(CMAKE_CXX_STANDARD 23)
 
 # static analyser to predict code smells
 #include(cmake/static_analyser.cmake)
@@ -23,19 +24,19 @@ CPMAddPackage("gh:TheLartians/Format.cmake@1.7.3")
 
 # enable testing
 enable_testing()
-
+set(CMAKE_CXX_STANDARD 23)
 # add lib
 add_subdirectory(lib)
 include_directories(lib)
 link_directories(${CMAKE_CURRENT_BINARY_DIR}/lib)
-
+set(CMAKE_CXX_STANDARD 23)
 # memory leak tracker
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/MLD)
 set(MLD_H ${CMAKE_CURRENT_SOURCE_DIR}/MLD/MemoryLeakDetector.h)
 set(MLD_SRC ${CMAKE_CURRENT_SOURCE_DIR}/MLD/MemoryLeakDetector.cpp)
 
 # the assignment subdirectory will hold all of the assignments
-
+set(CMAKE_CXX_STANDARD 23)
 # todo for tolsta: make this simpler
 # todo for the students: enable / disable assignments at your will
 add_subdirectory(assignment01)

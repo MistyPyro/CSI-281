@@ -43,6 +43,7 @@ using namespace csi281;
 class Person {
 public:
   Person(string n, unsigned int a) : name(n), age(a){};
+  Person():name(""),age(0){}
   bool operator==(const Person &other) const {
     return ((age == other.age) && (name == other.name));
   }
@@ -195,7 +196,7 @@ TEST_CASE("Dynamic Array", "[DA]") {
   }
 
   SECTION("string test") {
-    LinkedList<string> da = LinkedList<string>();
+    DynamicArray<string> da = DynamicArray<string>();
     string sampleStringArray1[6] = {"hi", "b", "d", "wo", "t", "e"};
     for (string &s : sampleStringArray1) {
       da.insertAtEnd(s);
@@ -230,7 +231,7 @@ TEST_CASE("Dynamic Array", "[DA]") {
   }
 
   SECTION("Person test") {
-    LinkedList<Person> da = LinkedList<Person>();
+    DynamicArray<Person> da = DynamicArray<Person>();
     Person samplePersonArray1[2] = {Person("Drew", 65), Person("Ellen", 66)};
     for (Person &p : samplePersonArray1) {
       da.insertAtEnd(p);

@@ -53,24 +53,38 @@ namespace csi281 {
     // Find the index of a particular item
     // Return -1 if it is not found
     int find(const T &item) {
-      // YOUR CODE HERE
+      Node *current = head;
+      for (int i = 0; i < count; i++) {
+        if (current->data == item)
+          return i;
+        current = current->next;
+      }
+      return -1;
     }
 
     // Get the item at a particular index
     T &get(int index) {
       assert(index < count);  // can't insert off end
       assert(index >= 0);     // no negative indices
-                              // YOUR CODE HERE
+      Node *current = head;
+      for (int i = 0; i < index; i++) {
+        current = current->next;
+      }
+      return current->data;
     }
 
     // Insert at the beginning of the collection
     void insertAtBeginning(const T &item) {
-      // YOUR CODE HERE
+      Node *current = head;
+      head = new Node(item);
+      head->next = current;
+      count++;
     }
 
     // Insert at the end of the collection
     void insertAtEnd(const T &item) {
-      // YOUR CODE HERE
+      tail->next = new Node(item);
+      count++;
     }
 
     // Insert at a specific index
@@ -102,13 +116,20 @@ namespace csi281 {
     // Remove the item at the beginning of the collection
     void removeAtBeginning() {
       assert(count > 0);
-      // YOUR CODE HERE
+      head = head->next;
+      count--;
     }
 
     // Remove the item at the end of the collection
     void removeAtEnd() {
       assert(count > 0);
-      // YOUR CODE HERE
+      Node* current = head;
+      while (current->next != tail) {
+        current = current->next;
+      }
+      tail = current;
+      tail->next = nullptr;
+      count--;
     }
 
     // Remove the item at a specific index

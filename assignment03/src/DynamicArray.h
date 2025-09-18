@@ -44,7 +44,7 @@ namespace csi281 {
     // Initialize the dynamic array with a starting capacity
     DynamicArray(int cap = DEFAULT_CAPACITY) {
       capacity = cap;
-      backingStore = new T[capacity];
+      backingStore = new T[capacity];//(T*)malloc(sizeof(T)*cap);//new T[capacity];
     }
 
     // Erase the dynamic array
@@ -88,8 +88,8 @@ namespace csi281 {
     void insertAtEnd(const T &item) {
       if (capacity == count)
         setCapacity(count * growthFactor);
-      count++;
       backingStore[count] = item;
+      count++;
     }
 
     // Insert at a specific index
@@ -106,7 +106,7 @@ namespace csi281 {
 
     // Remove the item at the beginning of the collection
     void removeAtBeginning() {
-      for (size_t i = 0; i < count; i++)
+      for (size_t i = 1; i < count; i++)
         backingStore[i - 1] = backingStore[i];
       count--;
     }
@@ -114,7 +114,7 @@ namespace csi281 {
     // Remove the item at the end of the collection
     // Hint: This might be very simple.
     void removeAtEnd() {
-      backingStore[count] = 0;
+      //backingStore[count] = NULL;
       count--;
     }
 
@@ -122,7 +122,16 @@ namespace csi281 {
     // Hint: Can be done by a combination of moving items
     // down and removing the starting beginning element
     void removeAt(int index) {
-      // YOUR CODE HERE
+      if (index == 0) {
+        removeAtBeginning();
+        return;
+      }
+      if (index == count) {
+        removeAtEnd();
+        return;
+      }
+      move_backward(backingStore, backingStore + index, backingStore + index + 1);
+      removeAtBeginning();
     }
 
     // Change the capacity of the dynamic array
