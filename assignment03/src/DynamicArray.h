@@ -6,6 +6,8 @@
 //
 //  Copyright 2019 David Kopec
 //
+//  MODIFIED BY COLIN SKAARUP
+//
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation files
 //  (the "Software"), to deal in the Software without restriction,
@@ -44,7 +46,7 @@ namespace csi281 {
     // Initialize the dynamic array with a starting capacity
     DynamicArray(int cap = DEFAULT_CAPACITY) {
       capacity = cap;
-      backingStore = new T[capacity];//(T*)malloc(sizeof(T)*cap);//new T[capacity];
+      backingStore = new T[capacity];
     }
 
     // Erase the dynamic array
@@ -53,7 +55,7 @@ namespace csi281 {
     // Find the index of a particular item
     // Return -1 if it is not found>
     int find(const T &item) {
-      for (int i = 0; i < capacity; i++) {
+      for (int i = 0; i < capacity; i++) { // linear search
         if (backingStore[i] == item) {
           return i;
         }
@@ -73,10 +75,6 @@ namespace csi281 {
     void insertAtBeginning(const T &item) {
       if (capacity == count)
         setCapacity(count * growthFactor);
-      /*for (size_t i = count; i > 0; i--)
-        backingStore[i] = backingStore[i - 1];
-      backingStore[0] = item;
-      count++;*/
       moveDownFrom(0);
       backingStore[0] = item;
       count++;
@@ -99,22 +97,21 @@ namespace csi281 {
     void insert(const T &item, int index) {
       if (capacity == count)
         setCapacity(count * growthFactor);
-      moveDownFrom(index);
-      backingStore[index] = item;
+      moveDownFrom(index); // make space for new item
+      backingStore[index] = item; // put item in new empty space
       count++;
     }
 
     // Remove the item at the beginning of the collection
     void removeAtBeginning() {
       for (size_t i = 1; i < count; i++)
-        backingStore[i - 1] = backingStore[i];
+        backingStore[i - 1] = backingStore[i]; //move every item up by 1 index
       count--;
     }
 
     // Remove the item at the end of the collection
     // Hint: This might be very simple.
     void removeAtEnd() {
-      //backingStore[count] = NULL;
       count--;
     }
 
@@ -122,6 +119,7 @@ namespace csi281 {
     // Hint: Can be done by a combination of moving items
     // down and removing the starting beginning element
     void removeAt(int index) {
+      //Use code already written if we can
       if (index == 0) {
         removeAtBeginning();
         return;
@@ -130,6 +128,7 @@ namespace csi281 {
         removeAtEnd();
         return;
       }
+      //standard case
       move_backward(backingStore, backingStore + index, backingStore + index + 1);
       removeAtBeginning();
     }
