@@ -67,6 +67,7 @@ namespace csi281 {
       assert(index < count);  // can't insert off end
       assert(index >= 0);     // no negative indices
       Node *current = head;
+      //loop through list to find index
       for (int i = 0; i < index; i++) {
         current = current->next;
       }
@@ -83,7 +84,19 @@ namespace csi281 {
 
     // Insert at the end of the collection
     void insertAtEnd(const T &item) {
-      tail->next = new Node(item);
+      //no tail case:
+      if (tail == nullptr) {
+        tail = new Node(item);
+        if (head == nullptr) { // if list is empty
+          head = tail;
+        }
+        count++;
+        return;
+      }
+      //standard case:
+      Node* temp = tail;
+      tail = new Node(item);
+      temp->next = tail;
       count++;
     }
 
@@ -116,7 +129,9 @@ namespace csi281 {
     // Remove the item at the beginning of the collection
     void removeAtBeginning() {
       assert(count > 0);
+      Node* temp = head;
       head = head->next;
+      delete temp;
       count--;
     }
 
@@ -124,9 +139,8 @@ namespace csi281 {
     void removeAtEnd() {
       assert(count > 0);
       Node* current = head;
-      while (current->next != tail) {
-        current = current->next;
-      }
+      for (current = head; current->next != tail; current = current->next);
+      delete tail;
       tail = current;
       tail->next = nullptr;
       count--;
