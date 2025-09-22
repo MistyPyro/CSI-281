@@ -35,7 +35,6 @@
 using namespace std;
 
 namespace csi281 {
-
   // Performs an in-place ascending sort of *array* of size *length*
   // using the bubble sort algorithm
   template <typename T> void bubbleSort(T array[], const int length) {
@@ -70,18 +69,15 @@ namespace csi281 {
   template <typename T> void insertionSort(T array[], const int length) {
     for (int i = 1; i < length; i++) {
       int sortedIndex = i;
-      // T sortingValue = array[sortedIndex];
+      T sortingValue = array[sortedIndex];
       for (int j = sortedIndex; j > 0; j--) {
-        if (array[j] < array[j - 1])
-          swap(array[j], array[j - 1]);
-        // array[j] = array[j - 1];
-        // else {
-        //   array[j] = array[j - 1];
-        //   array[j] = sortingValue;
-        //   break;
+        if (sortingValue < array[j - 1]) {
+          array[j] = array[j - 1];
+        }
         else
           break;
       }
+      array[sortedIndex - 1] = sortingValue;
     }
   }
 }  // namespace csi281
