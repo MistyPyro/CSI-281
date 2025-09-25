@@ -48,7 +48,16 @@ namespace csi281 {
   // NOTE: Your solution MUST use std::inplace_merge
   // http://www.cplusplus.com/reference/algorithm/inplace_merge/
   template <typename T> void mergeSort(T array[], const int start, const int end) {
-    // YOUR CODE HERE
+    int mid = (end + start) / 2;
+    if (end != start) {
+      mergeSort(array, start, mid);
+      mergeSort(array, mid + 1, end);
+      inplace_merge(array + start, array + mid, array + end);
+    }
+
+    // for (int i = start; i < end; i++)
+    //   if (array[i] > array[i + 1])
+    //     swap(array[i], array[i + 1]);
   }
 
   // setup random number generator
@@ -85,7 +94,19 @@ namespace csi281 {
   // NOTE: You will need to modify the implementation to only
   // sort part of the array as per the parameters of this version
   template <typename T> void insertionSort(T array[], const int start, const int end) {
-    // YOUR CODE HERE
+    for (int i = start; i < end + 1; i++) {
+      int sortedIndex = i;
+      T sortingValue = array[sortedIndex];
+      int placement = sortedIndex;
+      for (placement; placement > 0; placement--) {
+        if (sortingValue < array[placement - 1]) {
+          array[placement] = array[placement - 1];
+        }
+        else
+          break;
+      }
+      array[placement] = sortingValue;
+    }
   }
 
   // Performs an in-place ascending sort of *array*
