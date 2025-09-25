@@ -1,0 +1,12 @@
+Colin Skaarup
+
+1. bubbleSort() is slower than selectionSort() and insertionSort() because bubbleSort() is very inefficient compared to selectionSort() and insertionSort().
+   Even though they all have the same time complexity, the constants that are removed from the equation end up slowing bubbleSort() down.
+
+2. An optimized insertionSort() is faster than selectionSort() because selectionSort() makes a lot more comparisons than an optimized insertionSort().
+
+3. A custom class needs the property of "comparibility". The sorting algorithms compare each array spot, where it asks "is 3 > 4?" or "is 'banana' > 'soup'?".
+   for a C++ class, you would need to implement overloads of the >, >=, <, and <= operators.
+
+4. std::sort is so much faster because it is like a hybrid sorting algorithm. It chooses the best algorithm from its toolkit for the given data, instead of
+   applying the same algorithm to all data.

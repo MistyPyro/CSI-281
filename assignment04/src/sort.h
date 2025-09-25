@@ -6,6 +6,8 @@
 //
 //  Copyright 2019 David Kopec
 //
+// MODIFIED BY COLIN SKAARUP
+//
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation files
 //  (the "Software"), to deal in the Software without restriction,
@@ -70,14 +72,15 @@ namespace csi281 {
     for (int i = 1; i < length; i++) {
       int sortedIndex = i;
       T sortingValue = array[sortedIndex];
-      for (int j = sortedIndex; j > 0; j--) {
-        if (sortingValue < array[j - 1]) {
-          array[j] = array[j - 1];
+      int placement = sortedIndex;
+      for (placement; placement > 0; placement--) {
+        if (sortingValue < array[placement - 1]) {
+          array[placement] = array[placement - 1];
         }
         else
           break;
       }
-      array[sortedIndex - 1] = sortingValue;
+      array[placement] = sortingValue;
     }
   }
 }  // namespace csi281
