@@ -48,16 +48,12 @@ namespace csi281 {
   // NOTE: Your solution MUST use std::inplace_merge
   // http://www.cplusplus.com/reference/algorithm/inplace_merge/
   template <typename T> void mergeSort(T array[], const int start, const int end) {
-    int mid = (end + start) / 2;
-    if (end != start) {
+    if (end - start > 0) {
+      int mid = (end + start) / 2;
       mergeSort(array, start, mid);
-      mergeSort(array, mid + 1, end);
+      mergeSort(array, mid + 1, end );
       inplace_merge(array + start, array + mid, array + end);
     }
-
-    // for (int i = start; i < end; i++)
-    //   if (array[i] > array[i + 1])
-    //     swap(array[i], array[i + 1]);
   }
 
   // setup random number generator
@@ -78,7 +74,17 @@ namespace csi281 {
   // sort the center of the range, and then move the pivot back to
   // the appropriate place
   template <typename T> void quickSort(T array[], const int start, const int end) {
-    // YOUR CODE HERE
+    uniform_int_distribution<int> distribution(start, end);
+    int pivot = distribution(rd);
+    int lowerPoint = 1;
+    swap(array[pivot], array[start]);
+    for (int i = 1; i < end + 1; i++) {
+      if (array[i] < array[pivot]) {
+        swap(array[i], array[lowerPoint]);
+        lowerPoint++;
+      }
+    }
+    swap(array[pivot], array[lowerPoint]);
   }
 
   // Performs an in-place ascending sort of *array*
