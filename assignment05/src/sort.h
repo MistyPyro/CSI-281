@@ -9,6 +9,8 @@
 //
 //  Copyright 2019 David Kopec
 //
+//  MODIFIED BY COLIN SKAARUP
+//
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation files
 //  (the "Software"), to deal in the Software without restriction,
@@ -51,7 +53,7 @@ namespace csi281 {
     if (end - start > 0) {
       int mid = (end + start) / 2;
       mergeSort(array, start, mid);
-      mergeSort(array, mid + 1, end );
+      mergeSort(array, mid + 1, end);
       inplace_merge(array + start, array + mid + 1, array + end + 1);
     }
   }
@@ -128,10 +130,10 @@ namespace csi281 {
   // TIP: You can copy your implementation of merge sort in here, and
   // should be able to call the insertionSort above
   template <typename T> void hybridSort(T array[], const int start, const int end) {
-    if (end - start >= 10) {
+    if (end - start >= 9) {
       int mid = (end + start) / 2;
       mergeSort(array, start, mid);
-      mergeSort(array, mid + 1, end );
+      mergeSort(array, mid + 1, end);
       inplace_merge(array + start, array + mid + 1, array + end + 1);
     }
     insertionSort(array, start, end);
