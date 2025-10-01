@@ -128,7 +128,13 @@ namespace csi281 {
   // TIP: You can copy your implementation of merge sort in here, and
   // should be able to call the insertionSort above
   template <typename T> void hybridSort(T array[], const int start, const int end) {
-    // YOUR CODE HERE
+    if (end - start >= 10) {
+      int mid = (end + start) / 2;
+      mergeSort(array, start, mid);
+      mergeSort(array, mid + 1, end );
+      inplace_merge(array + start, array + mid + 1, array + end + 1);
+    }
+    insertionSort(array, start, end);
   }
 
 }  // namespace csi281
