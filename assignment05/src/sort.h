@@ -52,7 +52,7 @@ namespace csi281 {
       int mid = (end + start) / 2;
       mergeSort(array, start, mid);
       mergeSort(array, mid + 1, end );
-      inplace_merge(array + start, array + mid, array + end);
+      inplace_merge(array + start, array + mid + 1, array + end + 1);
     }
   }
 
@@ -76,15 +76,19 @@ namespace csi281 {
   template <typename T> void quickSort(T array[], const int start, const int end) {
     uniform_int_distribution<int> distribution(start, end);
     int pivot = distribution(rd);
-    int lowerPoint = 1;
+    int greaterPoint = start + 1;
     swap(array[pivot], array[start]);
-    for (int i = 1; i < end + 1; i++) {
-      if (array[i] < array[pivot]) {
-        swap(array[i], array[lowerPoint]);
-        lowerPoint++;
+    for (int i = greaterPoint; i <= end; i++) {
+      if (array[i] < array[start]) {
+        swap(array[i], array[greaterPoint]);
+        greaterPoint++;
       }
     }
-    swap(array[pivot], array[lowerPoint]);
+    swap(array[start], array[greaterPoint - 1]);
+    if (greaterPoint - start > 1)
+      quickSort(array, start, greaterPoint - 1);
+    if (end - greaterPoint > 0)
+      quickSort(array, greaterPoint, end);
   }
 
   // Performs an in-place ascending sort of *array*
