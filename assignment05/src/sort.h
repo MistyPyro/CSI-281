@@ -141,14 +141,14 @@ namespace csi281 {
   // NOTE: You will need to modify the implementation to only
   // sort part of the array as per the parameters of this version
   template <typename T> void insertionSort(T array[], const int start, const int end) {
-    if (end + 1 <= 1)
+    if (end - start + 1 <= 1)
       return;
 
     for (int i = start + 1; i < end + 1; i++) {
-      int sortedIndex = i;
-      T sortingValue = array[sortedIndex];
-      int placement = sortedIndex;
-      for (; placement > 0; placement--) {
+      //int sortedIndex = i;
+      T sortingValue = array[i];
+      int placement = i;
+      for (; placement > start; placement--) {
         if (sortingValue < array[placement - 1]) {
           array[placement] = array[placement - 1];
         }
