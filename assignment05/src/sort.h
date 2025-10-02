@@ -145,17 +145,16 @@ namespace csi281 {
       return;
 
     for (int i = start + 1; i < end + 1; i++) {
-      //int sortedIndex = i;
       T sortingValue = array[i];
       int placement = i;
       for (; placement > start; placement--) {
         if (sortingValue < array[placement - 1]) {
-          array[placement] = array[placement - 1];
+          swap(array[placement], array[placement - 1]);
         }
         else
           break;
       }
-      array[placement] = sortingValue;
+      //array[placement] = sortingValue;
     }
   }
 
