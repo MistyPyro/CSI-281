@@ -42,6 +42,42 @@ using namespace std;
 
 namespace csi281 {
 
+  template <typename T>
+  void merge(T* arr, const size_t start, const size_t mid,  const size_t end) {
+    // create a temporary array to store the merged array
+    std::vector<T> temp(end - start + 1);
+
+    // indexes for the subarrays:
+    const size_t leftStart = start;
+    const size_t leftEnd = mid;
+    const size_t rightStart = mid + 1;
+    const size_t rightEnd = end;
+
+    // indexes for
+    size_t tempIdx = 0;
+    size_t leftIdx = leftStart;
+    size_t rightIdx = rightStart;
+
+    // merge the subarrays
+    while (leftIdx <= leftEnd && rightIdx <= rightEnd) {
+      if (arr[leftIdx] < arr[rightIdx])
+        temp[tempIdx++] = arr[leftIdx++];
+      else
+        temp[tempIdx++] = arr[rightIdx++];
+    }
+
+    // copy the remaining elements of the left subarray
+    while (leftIdx <= leftEnd)
+      temp[tempIdx++] = arr[leftIdx++];
+
+    // copy the remaining elements of the right subarray
+    while (rightIdx <= rightEnd)
+      temp[tempIdx++] = arr[rightIdx++];
+
+    // copy the merged array back to the original array
+    std::copy(temp.begin(), temp.end(), arr + start);
+  }
+
   // Performs an in-place ascending sort of *array*
   // using the merge sort algorithm
   // *start* is the first element of the array to start sorting from
@@ -77,8 +113,7 @@ namespace csi281 {
   // the appropriate place
   template <typename T> void quickSort(T array[], const int start, const int end) {
     uniform_int_distribution<int> distribution(start, end);
-    int pivot = distribution(rd);
-    int greaterPoint = start + 1;
+    int pivot = distribution(rd), greaterPoint = start + 1;
     swap(array[pivot], array[start]);
     for (int i = greaterPoint; i <= end; i++) {
       if (array[i] < array[start]) {
@@ -106,11 +141,14 @@ namespace csi281 {
   // NOTE: You will need to modify the implementation to only
   // sort part of the array as per the parameters of this version
   template <typename T> void insertionSort(T array[], const int start, const int end) {
-    for (int i = start; i < end + 1; i++) {
+    if (end + 1 <= 1)
+      return;
+
+    for (int i = start + 1; i < end + 1; i++) {
       int sortedIndex = i;
       T sortingValue = array[sortedIndex];
       int placement = sortedIndex;
-      for (placement; placement > 0; placement--) {
+      for (; placement > 0; placement--) {
         if (sortingValue < array[placement - 1]) {
           array[placement] = array[placement - 1];
         }
@@ -132,11 +170,12 @@ namespace csi281 {
   template <typename T> void hybridSort(T array[], const int start, const int end) {
     if (end - start >= 9) {
       int mid = (end + start) / 2;
-      mergeSort(array, start, mid);
-      mergeSort(array, mid + 1, end);
-      inplace_merge(array + start, array + mid + 1, array + end + 1);
+      hybridSort(array, start, mid);
+      hybridSort(array, mid + 1, end);
+      merge(array, start, mid, end);
     }
-    insertionSort(array, start, end);
+    else
+      insertionSort(array, start, end);
   }
 
 }  // namespace csi281
