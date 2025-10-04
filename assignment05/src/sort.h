@@ -88,6 +88,7 @@ namespace csi281 {
   template <typename T> void mergeSort(T array[], const int start, const int end) {
     if (end - start > 0) {
       int mid = (end + start) / 2;
+      //recursively divide the array into sub arrays
       mergeSort(array, start, mid);
       mergeSort(array, mid + 1, end);
       inplace_merge(array + start, array + mid + 1, array + end + 1);
@@ -113,15 +114,17 @@ namespace csi281 {
   // the appropriate place
   template <typename T> void quickSort(T array[], const int start, const int end) {
     uniform_int_distribution<int> distribution(start, end);
-    int pivot = distribution(rd), greaterPoint = start + 1;
-    swap(array[pivot], array[start]);
+    int pivot = distribution(rd), greaterPoint = start + 1; //random pivot, greaterPoint tracks the dividing point between higher and lower values
+    swap(array[pivot], array[start]); // move pivot to start
     for (int i = greaterPoint; i <= end; i++) {
+      //put all values lower than pivot directly in front of it
       if (array[i] < array[start]) {
         swap(array[i], array[greaterPoint]);
         greaterPoint++;
       }
     }
-    swap(array[start], array[greaterPoint - 1]);
+    swap(array[start], array[greaterPoint - 1]); //insert pivot where it should be
+    //recursively continue until each sub array is sorted
     if (greaterPoint - start > 1)
       quickSort(array, start, greaterPoint - 1);
     if (end - greaterPoint > 0)
@@ -167,6 +170,7 @@ namespace csi281 {
   // TIP: You can copy your implementation of merge sort in here, and
   // should be able to call the insertionSort above
   template <typename T> void hybridSort(T array[], const int start, const int end) {
+    //merge sort again but in used with insertion sort
     if (end - start >= 9) {
       int mid = (end + start) / 2;
       hybridSort(array, start, mid);
