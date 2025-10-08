@@ -6,6 +6,8 @@
 //
 //  Copyright 2019 David Kopec
 //
+//  MODIFIED BY COLIN SKAARUP
+//
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation files
 //  (the "Software"), to deal in the Software without restriction,
@@ -65,7 +67,12 @@ namespace csi281 {
     // location in the backing store, so you're modifying
     // the original and not a copy
     void put(const K key, const V value) {
-      // YOUR CODE HERE
+      //if (backingStore[hashKey(key)] == nullptr) {
+        backingStore[hashKey(key)] = value;
+      //}
+      if (getLoadFactor() >= 0.7f) {
+        resize(getCapacity() * growthFactor);
+      }
     }
 
     // Get the item associated with a particular key
@@ -78,7 +85,9 @@ namespace csi281 {
     // location in the backing store, so you're modifying
     // the original and not a copy
     optional<V> get(const K &key) {
-      // YOUR CODE HERE
+      if (backingStore[hashKey(key)] == nullptr) { return nullopt; }
+
+      return optional<V>(backingStore[hashKey(key)]);
     }
 
     // Remove a key and any associated value from the hash table
@@ -88,7 +97,7 @@ namespace csi281 {
     // location in the backing store, so you're modifying
     // the original and not a copy
     void remove(const K &key) {
-      // YOUR CODE HERE
+      remove_if<int, bool>(0, capacity, backingStore[hashKey(key)] != nullptr);
     }
 
     // Calculate and return the load factor
@@ -122,7 +131,10 @@ namespace csi281 {
     // new backing store of size cap, or create
     // the backingStore for the first time
     void resize(int cap) {
-      // YOUR CODE HERE
+      list<pair<K, V>> *temp = new list<pair<K, V>>(cap);
+      for (int i = 0; i < capacity; i++) {
+        backingStore[i] = temp[i];
+      }
     }
 
     // hash anything into an integer appropriate for
