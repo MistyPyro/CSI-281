@@ -58,6 +58,9 @@ namespace csi281 {
     // Erase the array
     ~HashTable() { delete[] backingStore; }
 
+
+    //Very big thank you to Will at the Smart Space!!!!!
+
     // Put the key value pair in the hash table
     // If *key* is already present, change its
     // associated value to *value*
@@ -67,14 +70,15 @@ namespace csi281 {
     // location in the backing store, so you're modifying
     // the original and not a copy
     void put(const K key, const V value) {
-      //if (backingStore[hashKey(key)] == nullptr) {
-      for (auto p : backingStore[hashKey(key)]) {
-        p.second = value;
-        backingStore[hashKey(key)].assign(1, p);
+      auto &tempList = backingStore[hashKey(key)];
+      auto location = find_if(tempList.begin(), tempList.end(), [&] (pair<K, V>tempPair ){return (key == tempPair.first); }); //from Will
+      if (location == tempList.end()) {
+        tempList.push_back(make_pair(key, value));
+        count++;
       }
-
-        //backingStore[hashKey(key)] = new pair<K, V>(key, value);
-      //}
+      else {
+        location->second = value;
+      }
       if (getLoadFactor() >= 0.7f) {
         resize(getCapacity() * growthFactor);
       }
@@ -90,10 +94,12 @@ namespace csi281 {
     // location in the backing store, so you're modifying
     // the original and not a copy
     optional<V> get(const K &key) {
-      for (auto p : backingStore[hashKey(key)]) {
-        return optional<V>(p.second);
+      auto &tempList = backingStore[hashKey(key)];
+      auto location = find_if(tempList.begin(), tempList.end(), [&] (pair<K, V>tempPair ){return (key == tempPair.first); }); //from Will
+      if (location == tempList.end()) {
+        return nullopt;
       }
-      return nullopt;
+      return location->second;
     }
 
     // Remove a key and any associated value from the hash table
@@ -103,11 +109,13 @@ namespace csi281 {
     // location in the backing store, so you're modifying
     // the original and not a copy
     void remove(const K &key) {
-      // pair<K, V> temp;
-      // for (auto p : backingStore[hashKey(key)]) {
-      //
-      // }
-      remove_if(backingStore->begin(), backingStore->end(), backingStore[hashKey(key)]);
+      auto &tempList = backingStore[hashKey(key)];
+      auto location = remove_if(tempList.begin(), tempList.end(), [&] (pair<K, V>tempPair ){return (key == tempPair.first); } ); //from Will
+      if (location == backingStore->end()) {
+        return;
+      }
+      tempList.remove_if([&] (pair<K, V>tempPair ){return (key == tempPair.first); });
+      count--;
     }
 
     // Calculate and return the load factor
@@ -141,16 +149,30 @@ namespace csi281 {
     // new backing store of size cap, or create
     // the backingStore for the first time
     void resize(int cap) {
-      list<pair<K, V>> *temp = new list<pair<K, V>>(cap);
-      for (int i = 0; i < capacity; i++) {
-        backingStore[i] = temp[i];
+      capacity = cap;
+      list<pair<K, V>> *new_backingStore = new list<pair<K, V>>[cap];
+      if (backingStore == nullptr) {
+        backingStore = new_backingStore;
       }
+      else {
+        count = 0;
+        auto *temp = backingStore;
+        backingStore = new_backingStore;
+        for (int i = 0; i < cap / growthFactor; i++) {
+          for (auto p : temp[i]) {
+            put(p.first, p.second);
+          }
+        }
+        delete[] temp;
+        temp = nullptr;
+      }
+      new_backingStore = nullptr;
     }
 
     // hash anything into an integer appropriate for
     // the current capacity
     // TIP: use the std::hash key_hash defined as a private variable
-    size_t hashKey(const K &key) { return key_hash(key); }
+    size_t hashKey(const K &key) { return key_hash(key) % capacity; }
   };
 
 }  // namespace csi281
