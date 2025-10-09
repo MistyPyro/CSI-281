@@ -68,7 +68,12 @@ namespace csi281 {
     // the original and not a copy
     void put(const K key, const V value) {
       //if (backingStore[hashKey(key)] == nullptr) {
-        backingStore[hashKey(key)] = value;
+      for (auto p : backingStore[hashKey(key)]) {
+        p.second = value;
+        backingStore[hashKey(key)].assign(1, p);
+      }
+
+        //backingStore[hashKey(key)] = new pair<K, V>(key, value);
       //}
       if (getLoadFactor() >= 0.7f) {
         resize(getCapacity() * growthFactor);
@@ -85,9 +90,10 @@ namespace csi281 {
     // location in the backing store, so you're modifying
     // the original and not a copy
     optional<V> get(const K &key) {
-      if (backingStore[hashKey(key)] == nullptr) { return nullopt; }
-
-      return optional<V>(backingStore[hashKey(key)]);
+      for (auto p : backingStore[hashKey(key)]) {
+        return optional<V>(p.second);
+      }
+      return nullopt;
     }
 
     // Remove a key and any associated value from the hash table
@@ -97,7 +103,11 @@ namespace csi281 {
     // location in the backing store, so you're modifying
     // the original and not a copy
     void remove(const K &key) {
-      remove_if<int, bool>(0, capacity, backingStore[hashKey(key)] != nullptr);
+      // pair<K, V> temp;
+      // for (auto p : backingStore[hashKey(key)]) {
+      //
+      // }
+      remove_if(backingStore->begin(), backingStore->end(), backingStore[hashKey(key)]);
     }
 
     // Calculate and return the load factor
