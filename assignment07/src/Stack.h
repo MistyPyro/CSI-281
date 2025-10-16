@@ -30,13 +30,14 @@
 #define stack_hpp
 
 #include "SequentialCollection.h"
+#include <vector>
 
 using namespace std;
 
 namespace csi281 {
   template <typename T> class Stack : public SequentialCollection<T> {
   public:
-    // YOUR CODE HERE
+
   protected:
     using SequentialCollection<T>::backingStore;
   };
