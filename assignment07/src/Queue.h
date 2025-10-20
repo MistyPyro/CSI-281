@@ -36,7 +36,25 @@ using namespace std;
 namespace csi281 {
   template <typename T> class Queue : public SequentialCollection<T> {
   public:
-    // YOUR CODE HERE
+    void push(const T &data){
+      backingStore.push_front(data);
+    }
+
+    T pop(){
+      if (backingStore.getCount() != 0) {
+        T temp = backingStore.peek();
+        backingStore.remove(backingStore.peek());
+        return temp;
+      }
+      throw std::runtime_error("Unable to pop from empty queue");
+    }
+
+    T &peek() {
+      if (backingStore.getCount() != 0) {
+        return backingStore[backingStore.getCount() - 1];
+      }
+      throw std::runtime_error("Unable to peek from empty queue");
+    }
   protected:
     using SequentialCollection<T>::backingStore;
   };

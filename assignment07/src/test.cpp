@@ -64,7 +64,16 @@ TEST_CASE("Stack Tests", "[stack]") {
     // Ensure that push(), pop(), and peek()
     // work properly in concert with getCount()
     // and remove()
-    // YOUR CODE HERE
+    s1.push(1);
+    s1.push(3);
+    s1.push(8);
+    CHECK(s1.getCount() == 3);
+    CHECK(s1.peek() == 8);
+    cout << "Stack before Pop" << endl;
+    s1.debugPrint();
+    CHECK(s1.pop() == 8);
+    s1.pop();
+    CHECK(s1.peek() == 3);
   }
 
   SECTION("Stack w/ string tests") {

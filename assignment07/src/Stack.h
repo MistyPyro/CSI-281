@@ -30,14 +30,31 @@
 #define stack_hpp
 
 #include "SequentialCollection.h"
-#include <vector>
 
 using namespace std;
 
 namespace csi281 {
   template <typename T> class Stack : public SequentialCollection<T> {
   public:
+    void push(const T &data){
+      backingStore.push_back(data);
+    }
 
+    T pop(){
+      if (this->getCount() != 0) {
+        T temp = backingStore.peek();
+        backingStore.remove(backingStore.peek());
+        return temp;
+       }
+      throw std::runtime_error("Unable to pop from empty stack");
+    }
+
+    T &peek() {
+      if (this->getCount() != 0) {
+        return backingStore; // change this!!!!!!!!
+      }
+      throw std::runtime_error("Unable to peek from empty stack");
+    }
   protected:
     using SequentialCollection<T>::backingStore;
   };
