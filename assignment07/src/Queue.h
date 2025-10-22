@@ -43,7 +43,7 @@ namespace csi281 {
     T pop(){
       if (this->getCount() != 0) {
         T temp = peek();
-        backingStore.remove(peek());
+        backingStore.pop_back();
         return temp;
       }
       throw std::runtime_error("Unable to pop from empty queue");

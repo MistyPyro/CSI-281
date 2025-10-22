@@ -57,6 +57,7 @@ TEST_CASE("Queue Tests", "[queue]") {
     cout << "Queue before Pop:" << endl;
     q1.debugPrint();
     CHECK(q1.pop() == 7);
+    CHECK(q1.getCount() == 4);
     CHECK(q1.peek() == 3);
     cout << "Queue after Pop:" << endl;
     q1.debugPrint();
@@ -78,6 +79,7 @@ TEST_CASE("Queue Tests", "[queue]") {
     cout << "Queue before Pop:" << endl;
     q2.debugPrint();
     CHECK(q2.pop() == "cat");
+    CHECK(q2.getCount() == 4);
     CHECK(q2.peek() == "Doug");
     cout << "Queue after Pop:" << endl;
     q2.debugPrint();
@@ -100,6 +102,7 @@ TEST_CASE("Stack Tests", "[stack]") {
     cout << "Stack before Pop" << endl;
     s1.debugPrint();
     CHECK(s1.pop() == 8);
+    CHECK(s1.getCount() == 3);
     CHECK(s1.peek() == 3);
     cout << "Stack after Pop" << endl;
     s1.debugPrint();
@@ -120,6 +123,7 @@ TEST_CASE("Stack Tests", "[stack]") {
     cout << "Stack before Pop" << endl;
     s2.debugPrint();
     CHECK(s2.pop() == "dog");
+    CHECK(s2.getCount() == 3);
     CHECK(s2.peek() == "mouse");
     cout << "Stack after Pop" << endl;
     s2.debugPrint();
