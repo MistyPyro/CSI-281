@@ -46,7 +46,20 @@ TEST_CASE("Queue Tests", "[queue]") {
     // Ensure that push(), pop(), and peek()
     // work properly in concert with getCount()
     // and remove()
-    // YOUR CODE HERE
+    q1.push(7);
+    q1.push(3);
+    q1.push(7);
+    q1.push(25);
+    CHECK(q1.peek() == 7);
+    q1.push(8);
+    CHECK(q1.getCount() == 5);
+    CHECK(q1.peek() == 7);
+    cout << "Queue before Pop:" << endl;
+    q1.debugPrint();
+    CHECK(q1.pop() == 7);
+    CHECK(q1.peek() == 3);
+    cout << "Queue after Pop:" << endl;
+    q1.debugPrint();
   }
 
   SECTION("Queue w/ string tests") {
@@ -54,7 +67,20 @@ TEST_CASE("Queue Tests", "[queue]") {
     // Ensure that push(), pop(), and peek()
     // work properly in concert with getCount()
     // and remove()
-    // YOUR CODE HERE
+    q2.push("cat");
+    q2.push("Doug");
+    q2.push("cat");
+    q2.push("groceries");
+    CHECK(q2.peek() == "cat");
+    q2.push("dishes");
+    CHECK(q2.getCount() == 5);
+    CHECK(q2.peek() == "cat");
+    cout << "Queue before Pop:" << endl;
+    q2.debugPrint();
+    CHECK(q2.pop() == "cat");
+    CHECK(q2.peek() == "Doug");
+    cout << "Queue after Pop:" << endl;
+    q2.debugPrint();
   }
 }
 
@@ -65,15 +91,18 @@ TEST_CASE("Stack Tests", "[stack]") {
     // work properly in concert with getCount()
     // and remove()
     s1.push(1);
-    s1.push(3);
     s1.push(8);
-    CHECK(s1.getCount() == 3);
+    s1.push(3);
+    CHECK(s1.peek() == 3);
+    s1.push(8);
+    CHECK(s1.getCount() == 4);
     CHECK(s1.peek() == 8);
     cout << "Stack before Pop" << endl;
     s1.debugPrint();
     CHECK(s1.pop() == 8);
-    s1.pop();
     CHECK(s1.peek() == 3);
+    cout << "Stack after Pop" << endl;
+    s1.debugPrint();
   }
 
   SECTION("Stack w/ string tests") {
@@ -81,6 +110,18 @@ TEST_CASE("Stack Tests", "[stack]") {
     // Ensure that push(), pop(), and peek()
     // work properly in concert with getCount()
     // and remove()
-    // YOUR CODE HERE
+    s2.push("cat");
+    s2.push("dog");
+    s2.push("mouse");
+    CHECK(s2.peek() == "mouse");
+    s2.push("dog");
+    CHECK(s2.getCount() == 4);
+    CHECK(s2.peek() == "dog");
+    cout << "Stack before Pop" << endl;
+    s2.debugPrint();
+    CHECK(s2.pop() == "dog");
+    CHECK(s2.peek() == "mouse");
+    cout << "Stack after Pop" << endl;
+    s2.debugPrint();
   }
 }

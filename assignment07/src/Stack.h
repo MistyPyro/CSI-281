@@ -42,8 +42,8 @@ namespace csi281 {
 
     T pop(){
       if (this->getCount() != 0) {
-        T temp = backingStore.peek();
-        backingStore.remove(backingStore.peek());
+        T temp = peek();
+        backingStore.remove(peek());
         return temp;
        }
       throw std::runtime_error("Unable to pop from empty stack");
@@ -51,7 +51,7 @@ namespace csi281 {
 
     T &peek() {
       if (this->getCount() != 0) {
-        return backingStore; // change this!!!!!!!!
+        return backingStore.back();
       }
       throw std::runtime_error("Unable to peek from empty stack");
     }

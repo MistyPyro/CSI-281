@@ -41,17 +41,17 @@ namespace csi281 {
     }
 
     T pop(){
-      if (backingStore.getCount() != 0) {
-        T temp = backingStore.peek();
-        backingStore.remove(backingStore.peek());
+      if (this->getCount() != 0) {
+        T temp = peek();
+        backingStore.remove(peek());
         return temp;
       }
       throw std::runtime_error("Unable to pop from empty queue");
     }
 
     T &peek() {
-      if (backingStore.getCount() != 0) {
-        return backingStore[backingStore.getCount() - 1];
+      if (this->getCount() != 0) {
+        return backingStore.back();
       }
       throw std::runtime_error("Unable to peek from empty queue");
     }

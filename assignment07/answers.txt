@@ -1,0 +1,15 @@
+Colin Skaarup
+
+1. a. A line of people at a store
+   b. A ski lift
+   c. items on a conveyer belt
+
+2. a. A pile of papers
+   b. A box of items
+   c. Blankets on a bed
+
+3. Passing all of the tests does not guarantee that the program works correctly. The tests may not be rigorous, or leave out tests
+   for key functionalities since they are created by people and people can forget or overlook things.
+
+4. A linked list is better because stacks and queues don't require random access, and using a fixed-size array would add the requirement
+   of resizing every time the array is full.
