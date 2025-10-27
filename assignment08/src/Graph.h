@@ -74,7 +74,9 @@ namespace csi281 {
     // Determines whether there is an edge between *from* and *to*
     // if either is not in the graph, return false
     bool edgeExists(const V &from, const V &to) {
-      // YOUR CODE HERE
+      if (adjacencyList.contains(from) && adjacencyList[from].contains(to))
+        return true;
+      return false;
     }
 
     using Path = list<V>;
@@ -102,7 +104,23 @@ namespace csi281 {
       // the start node came from nowhere, so we mark its parent as itself
       explored[start] = start;
 
-      // YOUR CODE HERE
+      stack<V> frontier;
+      frontier.push(start);
+      while (!frontier.empty()) {
+        V current = frontier.top();
+        frontier.pop();
+
+        //make sure we don't search already explored
+        if (explored.contains(current))
+          continue;
+
+        //mark visited
+        explored.emplace(current);
+
+        frontier.push(adjacencyList.neighbors(current)); //this does not work!!!!!!!
+      }
+
+      return pathMapToPath(explored, goal);
       // TIP: Start by defining a frontier and putting start onto it.
       // TIP: Follow the pseudocode from the slides from class
     }
