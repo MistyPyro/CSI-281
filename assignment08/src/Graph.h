@@ -117,10 +117,18 @@ namespace csi281 {
         //mark visited
         explored.emplace(current);
 
-        frontier.push(adjacencyList.neighbors(current)); //this does not work!!!!!!!
-      }
+        //frontier.push(neighbors(current)); //this does not work!!!!!!!
+        for (const auto& neighbor : adjacencyList[current]) {
+          if (!explored.contains(neighbor)) {
+            frontier.push(neighbor);
+            break; // is this break necessary?
+          }
+        }
 
-      return pathMapToPath(explored, goal);
+        if (explored.contains(goal))
+          return pathMapToPath(explored, goal);
+        return nullopt;
+      }
       // TIP: Start by defining a frontier and putting start onto it.
       // TIP: Follow the pseudocode from the slides from class
     }
