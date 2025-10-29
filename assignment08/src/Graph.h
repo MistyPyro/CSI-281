@@ -105,34 +105,30 @@ namespace csi281 {
       // the start node came from nowhere, so we mark its parent as itself
       explored[start] = start;
 
-      V previous = start;
       stack<V> frontier;
       frontier.push(start);
+
       while (!frontier.empty()) {
         V current = frontier.top();
         frontier.pop();
 
+        //found path
+        if (current == goal) {
+          V temp = current;
+          return pathMapToPath(explored, temp);
+        }
 
-        //make sure we don't search already explored
-        if (explored.contains(current))
-          continue;
-
-        //mark visited
-        explored[previous] = current;
-
-        //frontier.push(neighbors(current)); //this does not work!!!!!!!
-
+        //add neighbors
         for (const auto& neighbor : neighbors(current)) {
           if (!explored.contains(neighbor)) {
+            explored[neighbor] = current;
             frontier.push(neighbor);
             break;
           }
         }
-        previous = current;
       }
-      V temp = goal;
-      if (explored.contains(goal))
-        return pathMapToPath(explored, temp);
+
+      //found no path
       return nullopt;
       // TIP: Start by defining a frontier and putting start onto it.
       // TIP: Follow the pseudocode from the slides from class
@@ -147,33 +143,29 @@ namespace csi281 {
       // the start node came from nowhere, so we mark its parent as itself
       explored[start] = start;
 
-      V previous = start;
       queue<V> frontier;
       frontier.push(start);
+
       while (!frontier.empty()) {
         V current = frontier.front();
         frontier.pop();
 
-        //make sure we don't search already explored
-        if (explored.contains(current))
-          continue;
+        //found path
+        if (current == goal) {
+          V temp = current;
+          return pathMapToPath(explored, temp);
+        }
 
-        //mark visited
-        explored[previous] = current;
-
-        //frontier.push(neighbors(current)); //this does not work!!!!!!!
-
+        //add neighbors to queue
         for (const auto& neighbor : neighbors(current)) {
           if (!explored.contains(neighbor)) {
+            explored[neighbor] = current;
             frontier.push(neighbor);
-            break;
           }
         }
-        previous = current;
       }
-      V temp = goal;
-      if (explored.contains(goal))
-        return pathMapToPath(explored, temp);
+
+      //found no path
       return nullopt;
       // TIP: Start by defining a frontier and putting start onto it.
       // TIP: Follow the pseudocode from the slides from class

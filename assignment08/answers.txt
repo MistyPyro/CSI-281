@@ -1,0 +1,12 @@
+Colin Skaarup
+
+1. It depends. Breadth first search moves from the start and travels outward visiting each node,
+   whereas depth first search dives into a branch before moving to a different branch. Breadth first search would be faster
+   if the goal was somewhere close to the start. Depth first search would be faster if the goal was deep in a sub-branch.
+
+2. The runtime of breadth first search is O(E + V) where E = # of edges and V = # of vertices. This is because breadth first search
+   travels through each edge and vertex.
+
+3. An adjacency matrix would be less memory efficient because a social graph of friends would be sparse, which causes the matrix to use a lot of memory.
+
+4. Solving a Maze, I.E. the strategy of following the left wall.
