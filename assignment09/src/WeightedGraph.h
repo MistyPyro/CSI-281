@@ -37,6 +37,7 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
+#include <cassert>
 
 #include "MemoryLeakDetector.h"
 
@@ -126,7 +127,19 @@ namespace csi281 {
           = priority_queue<pair<W, V>, vector<pair<W, V>>, greater<pair<W, V>>>();
       frontier.push(make_pair(0, start));
 
-      // YOUR CODE HERE
+      while (!frontier.empty()) {
+        auto [cost, current_id] = frontier.top();
+        frontier.pop();
+
+        for (const auto& neighbor : neighborsWithWeights(current_id)) {
+          auto new_cost = weights[current_id] + neighbor.second;
+          if (!weights.contains(neighbor.first) || new_cost < weights[neighbor.first]) {
+            parents[neighbor.first] = current_id;
+            weights[neighbor.first] = new_cost;
+            frontier.push(make_pair(new_cost, neighbor.first));
+          }
+        }
+      }
       // NOTE: You must use the constructs defined at
       // the beginning of this method in your code.
       // NOTE: Because the majority of the grade is based on the
