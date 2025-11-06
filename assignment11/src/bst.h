@@ -71,13 +71,46 @@ namespace csi281 {
     // TIP: If the tree is empty, remember that you
     // need to initialize root
     void insert(T key) {
-      // YOUR CODE HERE
+      if (root == nullptr) {
+        root = new Node(key, nullptr, nullptr);
+        count++;
+        return;
+      }
+      Node* current = root, *parent = root;
+      while (current != nullptr) {
+        parent = current;
+        if (key < current->key)
+          current = current->left;
+        else if (key >= current->key)
+          current = current->right;
+      }
+      if (key >= parent->key) {
+        parent->right = new Node(key, nullptr, nullptr);
+        count++;
+        return;
+      }
+      if (key < parent->key) {
+        parent->left = new Node(key, nullptr, nullptr);
+        count++;
+        return;
+      }
     }
 
     // Do a search through the tree and return
     // whether or not it contains *key*
     bool contains(const T &key) {
-      // YOUR CODE HERE
+      Node* current = root;
+      while (current != nullptr) {
+        //move down the tree
+        if (current->key < key)
+          current = current->right;
+        else if (current->key > key)
+          current = current->left;
+        else
+          return true;
+      }
+      //did not find
+      return false;
     }
 
     // Helper for inOrderWalk() to call for entire bst
@@ -94,13 +127,23 @@ namespace csi281 {
     // Find the minimum key in the tree
     // If the tree is empty, return nullopt
     optional<T> minimum() {
-      // YOUR CODE HERE
+      if (root == nullptr)
+        return nullopt;
+      Node* current = root;
+      while (current->left != nullptr)
+        current = current->left;
+      return current->key;
     }
 
     // Find the maximum key in the tree
     // If the tree is empty, return nullopt
     optional<T> maximum() {
-      // YOUR CODE HERE
+      if (root == nullptr)
+        return nullopt;
+      Node* current = root;
+      while (current->right != nullptr)
+        current = current->right;
+      return current->key;
     }
 
     // How many nodes are in the tree?
