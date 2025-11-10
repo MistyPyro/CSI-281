@@ -1,0 +1,25 @@
+Colin Skaarup
+
+1. Jarnik's algorithm can be reworked to select the edge with the most weight instead of least weight to find the maximum-spanning tree.
+
+2. A minimum-spanning tree is different because a solution to The Travelling Salesman problem is a path, while a minimum-spanning tree is a tree.
+   Source: Sumit Gupta at https://stackoverflow.com/questions/3838747/whats-the-difference-between-minimmum-spanning-tree-and-travelling-salesman-pro
+
+3.              Seattle     San Francisco   Los Angeles     Riverside   Phoenix
+      Seattle      0              1              0              0          0
+San Francisco      1              0              1              1          0
+  Los Angeles      0              1              0              1          1
+    Riverside      0              1              1              0          1
+      Phoenix      0              0              1              1          0
+
+4. The time complexity is O((V + E)LogV) (where E is # of edges, V # of vertices) when a priority queue is used. Without a priority queue, the time complexity is O(V^2).
+   There is a difference because of how a priority queue functions compared to the alternative
+   Source: https://www.geeksforgeeks.org/dsa/time-and-space-complexity-analysis-of-prims-algorithm/
+
+5. Jarnik's algorithm is a greedy algorithm because it picks the edge with the least weight at each step, being greedy by picking the best available option every time.
+
+6. An algorithm is the Bellman-Ford algorithm. The purpose of the algorithm is to compute the shortest paths from a single vertex to all other vertices in a weighted digraph.
+   I struggled to find documentation about it, but I believe that the name being Bellman-Ford is due to them having more popular publications over the original creator,
+   Alfonso Shimbel.
+   Sources: Claude, with prompt: I was given this question. Do not give me the answer, but help me find algorithms to research: "[question 6]"
+            https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm#Notes
