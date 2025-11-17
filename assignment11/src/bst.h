@@ -9,6 +9,8 @@
 //
 //  Copyright 2019 David Kopec
 //
+//  MODIFIED BY COLIN SKAARUP
+//
 //  Permission is hereby granted, free of charge, to any person
 //  obtaining a copy of this software and associated documentation files
 //  (the "Software"), to deal in the Software without restriction,
@@ -92,7 +94,6 @@ namespace csi281 {
       if (key < parent->key) {
         parent->left = new Node(key, nullptr, nullptr);
         count++;
-        return;
       }
     }
 
@@ -121,7 +122,10 @@ namespace csi281 {
     // list *accumulated*
     // TIP: See page 288 of Chapter 12 of Introduction to Algorithms
     void inOrderWalk(list<T> &accumulated, Node *current) {
-      // YOUR CODE HERE
+      if (current == nullptr) { return; }
+      inOrderWalk(accumulated, current->left);
+      accumulated.push_back(current->key);
+      inOrderWalk(accumulated, current->right);
     }
 
     // Find the minimum key in the tree
