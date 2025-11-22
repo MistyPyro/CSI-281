@@ -68,12 +68,12 @@ namespace csi281 {
     // NOTE: Do not worry about contracting the size of the backing vector
     // after a pop.
     T pop() {
-      if (heap.size() < 1)
+      if (heapSize < 1)
         throw std::runtime_error("PriorityQueue is empty");
       auto max = heap[0];
-      heap[0] = heap[heap.size() - 1];
-      maxHeapify(0);
+      heap[0] = heap[heapSize - 1];
       heapSize--;
+      maxHeapify(0);
       return max;
     }
 
@@ -86,9 +86,10 @@ namespace csi281 {
     // NOTE: our last element is at heapSize after being push_back()ed onto
     // the end of the vector heap
     void push(T key) {
+      heap.resize(heap.size() + 1);
       heapSize++;
-      heap[heapSize] = key;
-      int i = heap.size();
+      heap[heapSize - 1] = key;
+      int i = heapSize - 1;
       while (i > 0 && heap[parent(i)] < heap[i]) {
         swap(heap[i], heap[parent(i)]);
         i = parent(i);
